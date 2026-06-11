@@ -1,0 +1,366 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_CLIENTES 100
+#define MAX_VEICULOS 100
+#define MAX_VISTORIADORES 50
+#define MAX_VISTORIAS 200
+
+// ================= CLIENTES =================
+
+typedef struct {
+    char nome[100];
+    char cpf[15];
+    char telefone[20];
+} Cliente;
+
+Cliente clientes[MAX_CLIENTES];
+int qtdClientes = 0;
+
+// ================= VEICULOS =================
+
+typedef struct {
+    char placa[10];
+    char marca[50];
+    char modelo[50];
+    int ano;
+    char cor[30];
+    char tipo[30];
+    char cpfProprietario[15];
+} Veiculo;
+
+Veiculo veiculos[MAX_VEICULOS];
+int qtdVeiculos = 0;
+
+// ================= VISTORIADORES =================
+
+typedef struct {
+    int matricula;
+    char nome[100];
+} Vistoriador;
+
+Vistoriador vistoriadores[MAX_VISTORIADORES];
+int qtdVistoriadores = 0;
+
+// ================= VISTORIAS =================
+
+typedef struct {
+    char placa[10];
+    char cpfCliente[15];
+    int matriculaVistoriador;
+
+    int pneus;
+    int iluminacao;
+    int freios;
+    int documentacao;
+    int chassi;
+    int motor;
+    int poluentes;
+    int equipamentos;
+
+    char status[20];
+} Vistoria;
+
+Vistoria vistorias[MAX_VISTORIAS];
+int qtdVistorias = 0;
+
+// ================= CLIENTES =================
+
+void cadastrarCliente() {
+    Cliente c;
+
+    printf("\nNome: ");
+    scanf(" %[^\n]", c.nome);
+
+    printf("CPF: ");
+    scanf("%s", c.cpf);
+
+    printf("Telefone: ");
+    scanf("%s", c.telefone);
+
+    clientes[qtdClientes++] = c;
+
+    printf("\nCliente cadastrado!\n");
+}
+
+void listarClientes() {
+    printf("\n=== CLIENTES ===\n");
+
+    for(int i = 0; i < qtdClientes; i++) {
+        printf("\nNome: %s", clientes[i].nome);
+        printf("\nCPF: %s", clientes[i].cpf);
+        printf("\nTelefone: %s\n", clientes[i].telefone);
+    }
+}
+
+// ================= VEICULOS =================
+
+void cadastrarVeiculo() {
+    Veiculo v;
+
+    printf("\nPlaca: ");
+    scanf("%s", v.placa);
+
+    printf("Marca: ");
+    scanf(" %[^\n]", v.marca);
+
+    printf("Modelo: ");
+    scanf(" %[^\n]", v.modelo);
+
+    printf("Ano: ");
+    scanf("%d", &v.ano);
+
+    printf("Cor: ");
+    scanf(" %[^\n]", v.cor);
+
+    printf("Tipo: ");
+    scanf(" %[^\n]", v.tipo);
+
+    printf("CPF do proprietario: ");
+    scanf("%s", v.cpfProprietario);
+
+    veiculos[qtdVeiculos++] = v;
+
+    printf("\nVeiculo cadastrado!\n");
+}
+
+void listarVeiculos() {
+    printf("\n=== VEICULOS ===\n");
+
+    for(int i = 0; i < qtdVeiculos; i++) {
+        printf("\nPlaca: %s", veiculos[i].placa);
+        printf("\nMarca: %s", veiculos[i].marca);
+        printf("\nModelo: %s", veiculos[i].modelo);
+        printf("\nAno: %d", veiculos[i].ano);
+        printf("\nCor: %s", veiculos[i].cor);
+        printf("\nTipo: %s\n", veiculos[i].tipo);
+    }
+}
+
+// ================= VISTORIADORES =================
+
+void cadastrarVistoriador() {
+    Vistoriador v;
+
+    printf("\nMatricula: ");
+    scanf("%d", &v.matricula);
+
+    printf("Nome: ");
+    scanf(" %[^\n]", v.nome);
+
+    vistoriadores[qtdVistoriadores++] = v;
+
+    printf("\nVistoriador cadastrado!\n");
+}
+
+void listarVistoriadores() {
+    printf("\n=== VISTORIADORES ===\n");
+
+    for(int i = 0; i < qtdVistoriadores; i++) {
+        printf("\nMatricula: %d", vistoriadores[i].matricula);
+        printf("\nNome: %s\n", vistoriadores[i].nome);
+    }
+}
+
+// ================= VISTORIAS =================
+
+void agendarVistoria() {
+
+    Vistoria v;
+
+    printf("\nPlaca do veiculo: ");
+    scanf("%s", v.placa);
+
+    printf("CPF do cliente: ");
+    scanf("%s", v.cpfCliente);
+
+    printf("Matricula do vistoriador: ");
+    scanf("%d", &v.matriculaVistoriador);
+
+    strcpy(v.status, "PENDENTE");
+
+    vistorias[qtdVistorias++] = v;
+
+    printf("\nVistoria agendada!\n");
+}
+
+void realizarVistoria() {
+
+    char placa[10];
+
+    printf("\nPlaca: ");
+    scanf("%s", placa);
+
+    for(int i = 0; i < qtdVistorias; i++) {
+
+        if(strcmp(vistorias[i].placa, placa) == 0) {
+
+            printf("\n1=OK 0=FALHA\n");
+
+            printf("Pneus: ");
+            scanf("%d", &vistorias[i].pneus);
+
+            printf("Iluminacao: ");
+            scanf("%d", &vistorias[i].iluminacao);
+
+            printf("Freios: ");
+            scanf("%d", &vistorias[i].freios);
+
+            printf("Documentacao: ");
+            scanf("%d", &vistorias[i].documentacao);
+
+            printf("Chassi: ");
+            scanf("%d", &vistorias[i].chassi);
+
+            printf("Motor: ");
+            scanf("%d", &vistorias[i].motor);
+
+            printf("Emissao de poluentes: ");
+            scanf("%d", &vistorias[i].poluentes);
+
+            printf("Equipamentos obrigatorios: ");
+            scanf("%d", &vistorias[i].equipamentos);
+
+            if(
+                vistorias[i].pneus &&
+                vistorias[i].iluminacao &&
+                vistorias[i].freios &&
+                vistorias[i].documentacao &&
+                vistorias[i].chassi &&
+                vistorias[i].motor &&
+                vistorias[i].poluentes &&
+                vistorias[i].equipamentos
+            ) {
+                strcpy(vistorias[i].status, "APROVADO");
+            } else {
+                strcpy(vistorias[i].status, "REPROVADO");
+            }
+
+            printf("\nVistoria finalizada!\n");
+            return;
+        }
+    }
+
+    printf("\nVistoria nao encontrada!\n");
+}
+
+void listarVistorias() {
+
+    printf("\n=== VISTORIAS ===\n");
+
+    for(int i = 0; i < qtdVistorias; i++) {
+
+        printf("\nPlaca: %s", vistorias[i].placa);
+        printf("\nCPF Cliente: %s", vistorias[i].cpfCliente);
+        printf("\nMatricula Vistoriador: %d", vistorias[i].matriculaVistoriador);
+        printf("\nResultado: %s\n", vistorias[i].status);
+    }
+}
+
+// ================= RELATORIOS =================
+
+void relatorios() {
+
+    int aprovadas = 0;
+    int reprovadas = 0;
+    int pendentes = 0;
+
+    for(int i = 0; i < qtdVistorias; i++) {
+
+        if(strcmp(vistorias[i].status, "APROVADO") == 0)
+            aprovadas++;
+
+        else if(strcmp(vistorias[i].status, "REPROVADO") == 0)
+            reprovadas++;
+
+        else
+            pendentes++;
+    }
+
+    printf("\n===== RELATORIOS =====\n");
+
+    printf("Total de veiculos: %d\n", qtdVeiculos);
+    printf("Total de vistorias: %d\n", qtdVistorias);
+    printf("Aprovadas: %d\n", aprovadas);
+    printf("Reprovadas: %d\n", reprovadas);
+    printf("Pendentes: %d\n", pendentes);
+}
+
+// ================= MENU =================
+
+int main() {
+
+    int opcao;
+
+    do {
+
+        printf("\n===== SISTEMA DE VISTORIA VEICULAR =====\n");
+        printf("1 - Cadastrar Cliente\n");
+        printf("2 - Listar Clientes\n");
+        printf("3 - Cadastrar Veiculo\n");
+        printf("4 - Listar Veiculos\n");
+        printf("5 - Cadastrar Vistoriador\n");
+        printf("6 - Listar Vistoriadores\n");
+        printf("7 - Agendar Vistoria\n");
+        printf("8 - Realizar Vistoria\n");
+        printf("9 - Listar Vistorias\n");
+        printf("10 - Relatorios\n");
+        printf("0 - Sair\n");
+        printf("Opcao: ");
+        scanf("%d", &opcao);
+
+        switch(opcao) {
+
+            case 1:
+                cadastrarCliente();
+                break;
+
+            case 2:
+                listarClientes();
+                break;
+
+            case 3:
+                cadastrarVeiculo();
+                break;
+
+            case 4:
+                listarVeiculos();
+                break;
+
+            case 5:
+                cadastrarVistoriador();
+                break;
+
+            case 6:
+                listarVistoriadores();
+                break;
+
+            case 7:
+                agendarVistoria();
+                break;
+
+            case 8:
+                realizarVistoria();
+                break;
+
+            case 9:
+                listarVistorias();
+                break;
+
+            case 10:
+                relatorios();
+                break;
+
+            case 0:
+                printf("\nEncerrando...\n");
+                break;
+
+            default:
+                printf("\nOpcao invalida!\n");
+        }
+
+    } while(opcao != 0);
+
+    return 0;
+}
