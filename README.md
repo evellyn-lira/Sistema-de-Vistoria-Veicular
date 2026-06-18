@@ -48,8 +48,8 @@ O projeto foi desenvolvido utilizando estruturas (struct), vetores e funções p
 - Aprovação ou reprovação automática da vistoria
 
 ## Relatórios
-Total de veículos cadastrados
-Total de vistorias realizadas
-Quantidade de vistorias aprovadas
-Quantidade de vistorias reprovadas
-Quantidade de vistorias pendentes
+- Total de veículos cadastrados
+- Total de vistorias realizadas
+- Quantidade de vistorias aprovadas
+- Quantidade de vistorias reprovadas
+- Quantidade de vistorias pendentes
